@@ -37,7 +37,7 @@ distX = L2_distance_1(X,X);
 A = zeros(num);
 rr = zeros(num,1);
 
-% ³õÊ¼»¯²Ù×÷ AÊÇÒ»¸öÀàËÆk½üÁÚÍ¼µÄ¶«Î÷¡£ÓÃµÄËÆºõÊÇCLRÕâÆªÎÄÕÂµÄinit Graph A µÄËã·¨¡£
+% åˆå§‹åŒ–æ“ä½œ Aæ˜¯ä¸€ä¸ªç±»ä¼¼kè¿‘é‚»å›¾çš„ä¸œè¥¿ã€‚ç”¨çš„ä¼¼ä¹æ˜¯CLRè¿™ç¯‡æ–‡ç« çš„init Graph A çš„ç®—æ³•ã€‚
 for i = 1:num
     di = distX1(i,2:k+2);
     rr(i) = 0.5*(k*di(k+1)-sum(di(1:k)));
@@ -45,7 +45,7 @@ for i = 1:num
     A(i,id) = (di(k+1)-di)/(k*di(k+1)-sum(di(1:k))+eps);
 end;
 
-% »­³ö³õÊ¼K½üÁÚÍ¼
+% ç”»å‡ºåˆå§‹Kè¿‘é‚»å›¾
 figure('name','init graph Matix A '); 
 imshow(A,[]); colormap jet; colorbar;
 XX = X';
@@ -64,33 +64,33 @@ if r <= 0
 end;
 lambda = mean(rr);      % initialize lambda by r
 
-% ¹¹ÔìÀ­ÆÕÀ­Ë¹¾ØÕó£¬
-% ¼ÙÉèA¹Ì¶¨£¬Çó½âF
+% æ„é€ æ‹‰æ™®æ‹‰æ–¯çŸ©é˜µï¼Œ
+% å‡è®¾Aå›ºå®šï¼Œæ±‚è§£F
 A0 = (A+A')/2;
 D0 = diag(sum(A0));
 L0 = D0 - A0;
-[F, temp, evs]=eig1(L0, c, 0);%µÃµ½Á½°Ù¸öÌØÕ÷ÏòÁ¿
+[F, temp, evs]=eig1(L0, c, 0);%å¾—åˆ°ä¸¤ç™¾ä¸ªç‰¹å¾å‘é‡
 
 if sum(evs(1:c+1)) < 0.00000000001
     error('The original graph has more than %d connected component', c);
 end;
 
-% ¼ÙÉèF¹Ì¶¨£¬
+% å‡è®¾Få›ºå®šï¼Œ
 % updateA
-% ÖğĞĞupdate A
+% é€è¡Œupdate A
 for iter = 1:NITER
-    %FÖ®¼äµÄL2¾àÀë
+    %Fä¹‹é—´çš„L2è·ç¦»
     distf = L2_distance_1(F',F');
     A = zeros(num);
     for i=1:num
         if islocal == 1
-            %islocal idxa0±íÊ¾Àëxi×î½üµÄµãµÄ×ø±ê
+            %islocal idxa0è¡¨ç¤ºç¦»xiæœ€è¿‘çš„ç‚¹çš„åæ ‡
             idxa0 = idx(i,2:k+1);
         else
             idxa0 = 1:num;
         end;
-        dfi = distf(i,idxa0);   % Ñ¡³öÓëfiÏà¾à×î½üµÄk¸ödistf¾àÀë
-        dxi = distX(i,idxa0);   % Ñ¡³öÓëxiÏà¾à×î½üµÄk¸ödistX¾àÀë
+        dfi = distf(i,idxa0);   % é€‰å‡ºä¸fiç›¸è·æœ€è¿‘çš„kä¸ªdistfè·ç¦»
+        dxi = distX(i,idxa0);   % é€‰å‡ºä¸xiç›¸è·æœ€è¿‘çš„kä¸ªdistXè·ç¦»
         ad = -(dxi+lambda*dfi)/(2*r);       % r is fixed ;ad = d_i/(2 r); d_ij = d_ij^x + r * d_ij^f
         A(i,idxa0) = EProjSimplex_new(ad);  % s_ij = -ad + n; --> PCAN:p980 (28)
     end;
