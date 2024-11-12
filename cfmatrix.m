@@ -88,7 +88,7 @@ disp(line_three);
 for i = 1:n_class
     temps = sprintf('       %d             ',i);
     for j = 1:n_class
-    temps = strcat(temps,sprintf(' |    %2.0f    ',confmatrix(i,j)));
+    temps = strcat(temps,sprintf(' |    %2.1f    ',confmatrix(i,j)));
     end
     disp(temps);
     clear temps

@@ -1,9 +1,9 @@
 function show(fea)
 [m,n] = size(fea);
-faceW = 32; 
-faceH = 32; 
-numPerLine =26; 
-ShowLine = 20; 
+faceW = n^0.5; 
+faceH = n^0.5; 
+numPerLine =10; 
+ShowLine = 10; 
 
 Y = zeros(faceH*ShowLine,faceW*numPerLine); 
 for i=0:ShowLine-1 
